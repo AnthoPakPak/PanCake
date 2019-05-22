@@ -60,7 +60,8 @@
 			<key>isStaticText</key>
 			<true/>
 			<key>footerText</key>
-			<string>Disable PanCake in certain apps. Use it if you encounter gesture conflicts. Relaunch app for change to take effect.</string>
+			<string>Disable PanCake in certain apps. Use it if you encounter gesture conflicts. Relaunch app for change to take effect.
+Some apps are already added on the list by default for your convenience.</string>
 		</dict>
 		<dict>
 			<key>cell</key>

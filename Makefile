@@ -15,6 +15,6 @@ include $(THEOS_MAKE_PATH)/aggregate.mk
 
 
 after-install::
-ifeq ($(RESPRING),1)
-	install.exec "killall -9 SpringBoard"
-endif
+# ifeq ($(RESPRING),1)
+# 	install.exec "killall -9 SpringBoard"
+# endif

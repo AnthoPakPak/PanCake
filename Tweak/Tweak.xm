@@ -12,7 +12,7 @@ BOOL enabled;
 UIPanGestureRecognizer *panGestureRecognizer;
 // UINavigationController *lastNavVC;
 
-BOOL hookedAppIsMobileSMS;
+BOOL shouldRecognizeSimultaneousGestures;
 
 
 %hook UINavigationController
@@ -66,7 +66,7 @@ BOOL hookedAppIsMobileSMS;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     DLog(@"gestureRecognizer");
 
-    if (hookedAppIsMobileSMS) {
+    if (shouldRecognizeSimultaneousGestures) {
         return YES;
     }
 
@@ -137,8 +137,8 @@ BOOL appIsBlacklisted(NSString *appName) {
     if (appName && !appIsBlacklisted(appName)) {
         DLog(@"PanCake: Hooking app %@", appName);
 
-        if ([appName isEqualToString:@"com.apple.MobileSMS"]) {
-            hookedAppIsMobileSMS = YES;
+        if ([appName isEqualToString:@"com.apple.MobileSMS"] || [appName isEqualToString:@"com.facebook.Messenger"]) {
+            shouldRecognizeSimultaneousGestures = YES;
         }
 
         %init(PanCake);
