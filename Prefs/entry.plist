@@ -1,0 +1,10 @@
+{
+    entry = {
+		bundle = PanCakePrefs;
+		cell = PSLinkCell;
+		detail = PCPrefsListController;
+		isController = 1;
+		label = PanCake;
+		icon = icon.png;
+    };
+}

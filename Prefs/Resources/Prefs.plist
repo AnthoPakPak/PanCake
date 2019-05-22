@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>headerCellClass</key>
+			<string>HBPackageNameHeaderCell</string>
+			<key>packageIdentifier</key>
+			<string>com.anthopak.pancake</string>
+			<key>showAuthor</key>
+			<false/>
+			<key>backgroundGradientColors</key>
+			<array>
+				<string>#DD2476</string>
+				<string>#FF512F</string>
+			</array>
+			<key>subtitleColor</key>
+			<array>
+				<integer>240</integer>
+				<integer>240</integer>
+				<integer>240</integer>
+			</array>
+		</dict>
+
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>isStaticText</key>
+			<true/>
+			<key>footerText</key>
+			<string>Kill apps or respring for change to take effect in already running apps.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.anthopak.pancake</string>
+			<key>label</key>
+			<string>ENABLED</string>
+			<key>key</key>
+			<string>enabled</string>
+			<key>PostNotification</key>
+			<string>com.anthopak.pancake/ReloadPrefs</string>
+		</dict>
+
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Blacklisted apps</string>
+			<key>isStaticText</key>
+			<true/>
+			<key>footerText</key>
+			<string>Disable PanCake in certain apps. Use it if you encounter gesture conflicts. Relaunch app for change to take effect.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>bundle</key>
+			<string>AppList</string>
+			<key>isController</key>
+			<string>1</string>
+			<key>label</key>
+			<string>Disable in selected apps</string>
+			<key>ALAllowsSelection</key>
+			<string>1</string>
+			<key>ALSettingsKeyPrefix</key>
+			<string></string>
+			<key>ALSettingsDefaultValue</key>
+			<string>0</string>
+			<key>ALSettingsPath</key>
+			<string>/var/mobile/Library/Preferences/com.anthopak.pancake.plist</string>
+			<key>ALSingleEnabledMode</key>
+			<false/>
+			<key>ALChangeNotification</key>
+			<string>com.anthopak.pancake/ReloadPrefs</string>
+		</dict>
+
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>isStaticText</key>
+			<true/>
+		</dict>
+<!-- 		<dict>
+			<key>action</key>
+			<string>respring:</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>RESPRING</string>
+		</dict> -->
+		<dict>
+			<key>cellClass</key>
+			<string>HBTwitterCell</string>
+			<key>label</key>
+			<string>AnthoPak</string>
+			<key>user</key>
+			<string>AnthoPak</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>DONATE</string>
+			<key>subtitle</key>
+			<string>SUPPORT_ME</string>
+			<key>url</key>
+			<string>https://bit.ly/AnthoPakDonate</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>PanCake</string>
+</dict>
+</plist>

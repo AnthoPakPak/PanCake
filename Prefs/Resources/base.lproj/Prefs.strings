@@ -1,0 +1,18 @@
+{
+  "ENABLED" = "Enabled";
+
+  "SECONDS_TO_REWIND_SKIP" = "SECONDS TO REWIND/SKIP";
+  "REWIND_SECONDS" = "Seconds to rewind:";
+  "SKIP_SECONDS" = "Seconds to skip:";
+
+  "VOLUME_BRIGHTNESS_FOOTER" = "Swipe up/down on the left of your screen to increase/decrease volume & Swipe up/down on the right of your screen to increase/decrease brightness.
+Inverse sides to send volume to the right and brightness to the left.";
+
+  "THIRD_PARTY_APPS_FOOTER" = "Enable VideoSwipes in third party apps.
+- YouTube (v14.17.10) has full support.
+- Facebook (v219.0) has limited support because Facebook app has many different players and gesture conflicts. Volume & brightness gestures aren't supported.";
+
+  "RESPRING" = "Respring";
+  "DONATE" = "Donate";
+  "SUPPORT_ME" = "Want more app integrations & features? Support me!";
+}
