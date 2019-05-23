@@ -15,6 +15,20 @@ UIPanGestureRecognizer *panGestureRecognizer;
 BOOL shouldRecognizeSimultaneousGestures;
 
 
+static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
+    CGPoint velocity = [panGestureRecognizer velocityInView:panGest.view];
+
+    DLog(@"panGestureIsSwipingLeftToRight %@", NSStringFromCGPoint(velocity));
+    if (fabs(velocity.x) > fabs(velocity.y)) { //horizontal
+        if (velocity.x > 0) { //from left to right
+            return YES;
+        }
+    }
+
+    return NO;
+}
+
+
 %hook UINavigationController
 
 -(void)_layoutTopViewController {
@@ -47,19 +61,7 @@ BOOL shouldRecognizeSimultaneousGestures;
 //Limit conflicts with some UIScrollView and swipes from right to left
 %new
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)panGestureRecognizer {
-    CGPoint velocity = [panGestureRecognizer velocityInView:panGestureRecognizer.view];
-
-    DLog(@"gestureRecognizerShouldBegin %@", NSStringFromCGPoint(velocity));
-    if (fabs(velocity.x) > fabs(velocity.y)) { //horizontal
-        if (velocity.x > 0) { //from left to right
-            DLog(@"YES");
-            return YES;
-        }
-    }
-
-    DLog(@"NO");
-
-    return NO;
+    return panGestureIsSwipingLeftToRight(panGestureRecognizer);
 }
 
 %new
@@ -67,7 +69,9 @@ BOOL shouldRecognizeSimultaneousGestures;
     DLog(@"gestureRecognizer");
 
     if (shouldRecognizeSimultaneousGestures) {
-        return YES;
+        if (gestureRecognizer == panGestureRecognizer) {
+            return panGestureIsSwipingLeftToRight(panGestureRecognizer); //Messenger app requires this additional check (swiping side)
+        }
     }
 
     return NO;
@@ -103,6 +107,7 @@ void setDefaultBlacklistedApps() {
         @"com.burbn.instagram",
         @"com.facebook.Facebook",
         @"com.christianselig.Apollo",
+        @"ph.telegra.Telegraph",
 
         //gesture conflicts
         @"com.spotify.client" //adding song to the queue

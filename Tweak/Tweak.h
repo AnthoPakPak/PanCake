@@ -35,6 +35,10 @@
 + (UIViewController*) topMostController;
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)panGestureRecognizer;
 
+-(void)_updateInteractiveTransition:(double)arg1 ;
+-(void)_finishInteractiveTransition:(double)arg1 transitionContext:(id)arg2 ;
+-(void)_cancelInteractiveTransition:(double)arg1 transitionContext:(id)arg2 ;
+
 @end
 
 
