@@ -17,12 +17,16 @@ BOOL shouldRecognizeSimultaneousGestures;
 
 static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     CGPoint velocity = [panGestureRecognizer velocityInView:panGest.view];
-
     DLog(@"panGestureIsSwipingLeftToRight %@", NSStringFromCGPoint(velocity));
+
     if (fabs(velocity.x) > fabs(velocity.y)) { //horizontal
         if (velocity.x > 0) { //from left to right
             return YES;
         }
+    }
+
+    if (velocity.x == 0 && velocity.y == 0) {
+        return YES; //workaround a bug that would happened in some apps with conflicting scroll view, that lead to velocity={0,0} after the first incomplete swipe
     }
 
     return NO;
@@ -89,7 +93,7 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 %hook _UINavigationInteractiveTransitionBase
 
 -(void)handleNavigationTransition:(UIPanGestureRecognizer*)arg1 {
-    DLog(@"handleNavigationTransition %@", arg1);
+    // DLog(@"handleNavigationTransition %@", arg1);
 
     %orig;
 }
