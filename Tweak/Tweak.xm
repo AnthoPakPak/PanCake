@@ -77,6 +77,12 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     return NO;
 }
 
+-(void)_finishInteractiveTransition:(double)arg1 transitionContext:(id)arg2 {
+    %orig;
+
+    [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight] impactOccurred];
+}
+
 %end //hook UINavigationController
 
 
