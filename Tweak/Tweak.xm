@@ -26,7 +26,7 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     }
 
     if (velocity.x == 0 && velocity.y == 0) {
-        return YES; //workaround a bug that would happened in some apps with conflicting scroll view, that lead to velocity={0,0} after the first incomplete swipe
+        return YES; //workaround a bug that would happened in some apps (like LinkedIn) with conflicting scroll view, that lead to velocity={0,0} after the first incomplete swipe
     }
 
     return NO;
