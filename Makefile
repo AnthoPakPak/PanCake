@@ -7,8 +7,14 @@ export THEOS_DEVICE_IP=192.168.0.20 THEOS_DEVICE_PORT=22
 
 include $(THEOS)/makefiles/common.mk
 
-SUBPROJECTS += Tweak Prefs
-#SUBPROJECTS += Tweak
+ifeq ($(SIMULATOR),1)
+	SUBPROJECTS += Tweak
+else
+	SUBPROJECTS += Tweak Prefs
+	#SUBPROJECTS += Tweak
+endif
+
+
 
 include $(THEOS_MAKE_PATH)/aggregate.mk
 

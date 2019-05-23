@@ -140,8 +140,12 @@ BOOL appIsBlacklisted(NSString *appName) {
 
 
 %ctor {
+    #ifndef SIMULATOR
     preferences = [[HBPreferences alloc] initWithIdentifier:@"com.anthopak.pancake"];
     [preferences registerBool:&enabled default:YES forKey:@"enabled"];
+    #else
+    enabled = YES;
+    #endif
     setDefaultBlacklistedApps();
 
     NSString *appName = [[NSBundle mainBundle] bundleIdentifier];
