@@ -40,8 +40,3 @@
 -(void)_cancelInteractiveTransition:(double)arg1 transitionContext:(id)arg2 ;
 
 @end
-
-
-
-@interface CKTranscriptCollectionView : UICollectionView
-@end

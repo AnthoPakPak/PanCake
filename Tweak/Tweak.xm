@@ -5,6 +5,7 @@ HBPreferences *preferences;
 #endif
 
 BOOL enabled;
+BOOL hapticFeedbackEnabled;
 
 
 %group PanCake
@@ -84,7 +85,9 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 -(void)_finishInteractiveTransition:(double)arg1 transitionContext:(id)arg2 {
     %orig;
 
-    [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight] impactOccurred];
+    if (hapticFeedbackEnabled) {
+        [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight] impactOccurred];
+    }
 }
 
 %end //hook UINavigationController
@@ -138,7 +141,7 @@ void setDefaultBlacklistedApps() {
     }
 }
 
-BOOL appIsBlacklisted(NSString *appName) {
+static BOOL appIsBlacklisted(NSString *appName) {
     return pref_getBool(appName) || !enabled;
 }
 
@@ -147,8 +150,10 @@ BOOL appIsBlacklisted(NSString *appName) {
     #ifndef SIMULATOR
     preferences = [[HBPreferences alloc] initWithIdentifier:@"com.anthopak.pancake"];
     [preferences registerBool:&enabled default:YES forKey:@"enabled"];
+    [preferences registerBool:&hapticFeedbackEnabled default:YES forKey:@"hapticFeedbackEnabled"];
     #else
     enabled = YES;
+    hapticFeedbackEnabled = YES;
     #endif
     setDefaultBlacklistedApps();
 
