@@ -82,14 +82,6 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     return NO;
 }
 
--(void)_finishInteractiveTransition:(double)arg1 transitionContext:(id)arg2 {
-    %orig;
-
-    if (hapticFeedbackEnabled) {
-        [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight] impactOccurred];
-    }
-}
-
 %end //hook UINavigationController
 
 
@@ -104,6 +96,23 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 %end //hook _UINavigationInteractiveTransitionBase
 
 %end //group PanCake
+
+
+%group HapticFeedback
+
+%hook UINavigationController
+
+-(void)_finishInteractiveTransition:(double)arg1 transitionContext:(id)arg2 {
+    %orig;
+
+    if (hapticFeedbackEnabled) {
+        [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight] impactOccurred];
+    }
+}
+
+%end //hook UINavigationController
+
+%end //group HapticFeedback
 
 
 // %group SpotifySpecialHandling
@@ -142,7 +151,7 @@ void setDefaultBlacklistedApps() {
 }
 
 static BOOL appIsBlacklisted(NSString *appName) {
-    return pref_getBool(appName) || !enabled;
+    return pref_getBool(appName);
 }
 
 
@@ -157,14 +166,21 @@ static BOOL appIsBlacklisted(NSString *appName) {
     #endif
     setDefaultBlacklistedApps();
 
-    NSString *appName = [[NSBundle mainBundle] bundleIdentifier];
-    if (appName && !appIsBlacklisted(appName)) {
-        DLog(@"PanCake: Hooking app %@", appName);
+    if (enabled) {
+        NSString *appName = [[NSBundle mainBundle] bundleIdentifier];
+        if (appName && !appIsBlacklisted(appName)) {
+            DLog(@"PanCake: Hooking app %@", appName);
+        
+            if ([appName isEqualToString:@"com.apple.MobileSMS"] || [appName isEqualToString:@"com.facebook.Messenger"]) {
+                shouldRecognizeSimultaneousGestures = YES;
+            }
 
-        if ([appName isEqualToString:@"com.apple.MobileSMS"] || [appName isEqualToString:@"com.facebook.Messenger"]) {
-            shouldRecognizeSimultaneousGestures = YES;
+            %init(PanCake);
         }
-
-        %init(PanCake);
+        
+        //HapticFeedback is splitted so that it can be performed even in blacklisted apps
+        if (hapticFeedbackEnabled) {
+            %init(HapticFeedback);
+        }
     }
 }
