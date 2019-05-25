@@ -5,27 +5,16 @@
 	<key>items</key>
 	<array>
 
-		<dict>
+	<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>headerCellClass</key>
-			<string>HBPackageNameHeaderCell</string>
-			<key>packageIdentifier</key>
-			<string>com.anthopak.pancake</string>
-			<key>showAuthor</key>
-			<false/>
-			<key>backgroundGradientColors</key>
-			<array>
-				<string>#DD2476</string>
-				<string>#FF512F</string>
-			</array>
-			<key>subtitleColor</key>
-			<array>
-				<integer>240</integer>
-				<integer>240</integer>
-				<integer>240</integer>
-			</array>
+			<string>HBImageTableCell</string>
+			<key>icon</key>
+			<string>header2.png</string>
 		</dict>
+
+
 
 
 		<dict>

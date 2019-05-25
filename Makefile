@@ -24,3 +24,4 @@ after-install::
 # ifeq ($(RESPRING),1)
 # 	install.exec "killall -9 SpringBoard"
 # endif
+	/Applications/OSDisplay.app/Contents/MacOS/OSDisplay -m 'Install success' -i 'tick' -d '1'

@@ -28,14 +28,20 @@
     return _specifiers;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
+-(void) viewDidLoad {
+    [super viewDidLoad];
 
-    CGRect frame = self.table.bounds;
-    frame.origin.y = -frame.size.height;
-	
-    [self.navigationController.navigationController.navigationBar setShadowImage: [UIImage new]];
-    self.navigationController.navigationController.navigationBar.translucent = YES;
+    // self.table.contentInset = UIEdgeInsetsMake(-34, 0, 0, 0);
+}
+
+- (double)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return tableView.frame.size.width * (300.0f/800.0f); //image ratio
+    } else if (section == 1) {
+        return 0;
+    } else {
+        return 45;
+    }
 }
 
 // - (void)respring:(id)sender {
