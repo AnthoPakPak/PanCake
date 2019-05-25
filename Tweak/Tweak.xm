@@ -71,8 +71,6 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 
 %new
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    DLog(@"gestureRecognizer");
-
     if (shouldRecognizeSimultaneousGestures) {
         if (gestureRecognizer == panGestureRecognizer) {
             return panGestureIsSwipingLeftToRight(panGestureRecognizer); //Messenger app requires this additional check (swiping side)
@@ -154,8 +152,40 @@ static BOOL appIsBlacklisted(NSString *appName) {
     return pref_getBool(appName);
 }
 
+static BOOL tweakShouldLoad() {
+    // https://www.reddit.com/r/jailbreak/comments/4yz5v5/questionremote_messages_not_enabling/d6rlh88/
+    BOOL shouldLoad = NO;
+    NSArray *args = [[NSClassFromString(@"NSProcessInfo") processInfo] arguments];
+    NSUInteger count = args.count;
+    if (count != 0) {
+        NSString *executablePath = args[0];
+        if (executablePath) {
+            NSString *processName = [executablePath lastPathComponent];
+            DLog(@"Processname : %@", processName);
+            BOOL isApplication = [executablePath rangeOfString:@"/Application/"].location != NSNotFound || [executablePath rangeOfString:@"/Applications/"].location != NSNotFound;
+            // BOOL isSpringBoard = [processName isEqualToString:@"SpringBoard"];
+            BOOL isFileProvider = [[processName lowercaseString] rangeOfString:@"fileprovider"].location != NSNotFound;
+            BOOL skip = [processName isEqualToString:@"AdSheet"]
+                        || [processName isEqualToString:@"CoreAuthUI"]
+                        || [processName isEqualToString:@"InCallService"]
+                        || [processName isEqualToString:@"MessagesNotificationViewService"]
+                        || [processName isEqualToString:@"PassbookUIService"]
+                        || [executablePath rangeOfString:@".appex/"].location != NSNotFound;
+            if (!isFileProvider && isApplication && !skip) {
+                shouldLoad = YES;
+            }
+        }
+    }
+
+    return shouldLoad;
+}
 
 %ctor {
+    if (!tweakShouldLoad()) {
+        NSLog(@"PanCake: shouldn't run in this process");
+        return;
+    }
+
     #ifndef SIMULATOR
     preferences = [[HBPreferences alloc] initWithIdentifier:@"com.anthopak.pancake"];
     [preferences registerBool:&enabled default:YES forKey:@"enabled"];
