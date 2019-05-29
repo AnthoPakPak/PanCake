@@ -7,17 +7,15 @@ HBPreferences *preferences;
 BOOL enabled;
 BOOL hapticFeedbackEnabled;
 
+NSString *appName;
 
 %group PanCake
-
-UIPanGestureRecognizer *panGestureRecognizer;
-// UINavigationController *lastNavVC;
 
 BOOL shouldRecognizeSimultaneousGestures;
 
 
 static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
-    CGPoint velocity = [panGestureRecognizer velocityInView:panGest.view];
+    CGPoint velocity = [panGest velocityInView:panGest.view];
     DLog(@"panGestureIsSwipingLeftToRight %@", NSStringFromCGPoint(velocity));
 
     if (fabs(velocity.x) > fabs(velocity.y)) { //horizontal
@@ -27,6 +25,7 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     }
 
     if (velocity.x == 0 && velocity.y == 0) {
+        DLog(@"Do velocity 0 workaround");
         return YES; //workaround a bug that would happened in some apps (like LinkedIn) with conflicting scroll view, that lead to velocity={0,0} after the first incomplete swipe
     }
 
@@ -49,13 +48,13 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     if (!viewForGesture) return;
     
     if (viewController != [viewController.navigationController.viewControllers objectAtIndex:0]) { //if it's not rootviewcontroller
-        if (![viewForGesture.gestureRecognizers containsObject:panGestureRecognizer]) {
-            DLog(@"Adding gesture on view : %@", self._cachedInteractionController);
+        if (!viewForGesture.dismissPanGestureRecognizer) {
+            DLog(@"Adding gesture on view %@ : %@", viewForGesture, self._cachedInteractionController);
 
             if ([self._cachedInteractionController respondsToSelector:@selector(handleNavigationTransition:)]) {
-                panGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self._cachedInteractionController action:@selector(handleNavigationTransition:)];
-                panGestureRecognizer.delegate = self;
-                [viewForGesture addGestureRecognizer:panGestureRecognizer];
+                viewForGesture.dismissPanGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self._cachedInteractionController action:@selector(handleNavigationTransition:)];
+                viewForGesture.dismissPanGestureRecognizer.delegate = self;
+                [viewForGesture addGestureRecognizer:viewForGesture.dismissPanGestureRecognizer];
             }
         }
     }
@@ -72,12 +71,22 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 %new
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if (shouldRecognizeSimultaneousGestures) {
-        if (gestureRecognizer == panGestureRecognizer) {
-            return panGestureIsSwipingLeftToRight(panGestureRecognizer); //Messenger app requires this additional check (swiping side)
+        if (gestureRecognizer == gestureRecognizer.view.dismissPanGestureRecognizer) {
+            if ([appName isEqualToString:@"com.facebook.Messenger"]) {
+                return panGestureIsSwipingLeftToRight(gestureRecognizer.view.dismissPanGestureRecognizer); //Messenger app requires this additional check (swiping side)
+            } else {
+                return YES;
+            }
         }
     }
 
     return NO;
+}
+
+
+-(void)_cancelInteractiveTransition:(double)arg1 transitionContext:(id)arg2 {
+    DLog(@"Interactive trans cancelled");
+    %orig;
 }
 
 %end //hook UINavigationController
@@ -92,6 +101,14 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 }
 
 %end //hook _UINavigationInteractiveTransitionBase
+
+
+%hook UIView
+
+%property (nonatomic, retain) UIPanGestureRecognizer *dismissPanGestureRecognizer;
+
+%end //hook UIView
+
 
 %end //group PanCake
 
@@ -197,7 +214,7 @@ static BOOL tweakShouldLoad() {
     setDefaultBlacklistedApps();
 
     if (enabled) {
-        NSString *appName = [[NSBundle mainBundle] bundleIdentifier];
+        appName = [[NSBundle mainBundle] bundleIdentifier];
         if (appName && !appIsBlacklisted(appName)) {
             DLog(@"PanCake: Hooking app %@", appName);
         

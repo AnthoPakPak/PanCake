@@ -40,3 +40,10 @@
 -(void)_cancelInteractiveTransition:(double)arg1 transitionContext:(id)arg2 ;
 
 @end
+
+
+@interface UIView (Custom)
+
+@property (nonatomic, retain) UIPanGestureRecognizer *dismissPanGestureRecognizer;
+
+@end

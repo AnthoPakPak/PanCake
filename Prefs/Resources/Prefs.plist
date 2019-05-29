@@ -5,7 +5,7 @@
 	<key>items</key>
 	<array>
 
-	<dict>
+		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>headerCellClass</key>
@@ -13,8 +13,6 @@
 			<key>icon</key>
 			<string>header2.png</string>
 		</dict>
-
-
 
 
 		<dict>
@@ -101,6 +99,20 @@ Some apps are already added on the list by default for your convenience.</string
 			<string>com.anthopak.pancake/ReloadPrefs</string>
 		</dict>
 
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>isStaticText</key>
+			<true/>
+		</dict>
+ 		<dict>
+			<key>action</key>
+			<string>respring:</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Respring</string>
+		</dict>
 
 		<dict>
 			<key>cell</key>
@@ -108,14 +120,6 @@ Some apps are already added on the list by default for your convenience.</string
 			<key>isStaticText</key>
 			<true/>
 		</dict>
-<!-- 		<dict>
-			<key>action</key>
-			<string>respring:</string>
-			<key>cell</key>
-			<string>PSButtonCell</string>
-			<key>label</key>
-			<string>RESPRING</string>
-		</dict> -->
 		<dict>
 			<key>cellClass</key>
 			<string>HBTwitterCell</string>

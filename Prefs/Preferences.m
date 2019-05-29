@@ -37,17 +37,15 @@
 - (double)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         return tableView.frame.size.width * (300.0f/800.0f); //image ratio
-    } else if (section == 1) {
-        return 0;
     } else {
-        return 45;
+        return [self tableView:tableView titleForHeaderInSection:section] ? 45 : 0;
     }
 }
 
-// - (void)respring:(id)sender {
-//     NSTask *t = [[[NSTask alloc] init] autorelease];
-//     [t setLaunchPath:@"/usr/bin/killall"];
-//     [t setArguments:[NSArray arrayWithObjects:@"backboardd", nil]];
-//     [t launch];
-// }
+- (void)respring:(id)sender {
+    NSTask *t = [[[NSTask alloc] init] autorelease];
+    [t setLaunchPath:@"/usr/bin/killall"];
+    [t setArguments:[NSArray arrayWithObjects:@"SpringBoard", nil]];
+    [t launch];
+}
 @end
