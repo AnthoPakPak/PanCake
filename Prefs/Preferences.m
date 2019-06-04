@@ -45,7 +45,7 @@
 - (void)respring:(id)sender {
     NSTask *t = [[[NSTask alloc] init] autorelease];
     [t setLaunchPath:@"/usr/bin/killall"];
-    [t setArguments:[NSArray arrayWithObjects:@"SpringBoard", nil]];
+    [t setArguments:[NSArray arrayWithObjects:@"backboardd", nil]];
     [t launch];
 }
 @end

@@ -24,10 +24,10 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
         }
     }
 
-    if (velocity.x == 0 && velocity.y == 0) {
-        DLog(@"Do velocity 0 workaround");
-        return YES; //workaround a bug that would happened in some apps (like LinkedIn) with conflicting scroll view, that lead to velocity={0,0} after the first incomplete swipe
-    }
+    // if (velocity.x == 0 && velocity.y == 0) {
+    //     DLog(@"Do velocity 0 workaround");
+    //     return YES; //workaround a bug that would happened in some apps (like LinkedIn) with conflicting scroll view, that lead to velocity={0,0} after the first incomplete swipe
+    // }
 
     return NO;
 }
@@ -38,28 +38,31 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 -(void)_layoutTopViewController {
     %orig;
 
-    UIViewController *viewController = [self topViewController];
+    //main thread to let time for some apps (Apple Support) to load nibs
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *viewController = [self topViewController];
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wundeclared-selector"
 
-    UIView *viewForGesture = viewController.view;
+            UIView *viewForGesture = viewController.view;
 
-    if (!viewForGesture) return;
-    
-    if (viewController != [viewController.navigationController.viewControllers objectAtIndex:0]) { //if it's not rootviewcontroller
-        if (!viewForGesture.dismissPanGestureRecognizer) {
-            DLog(@"Adding gesture on view %@ : %@", viewForGesture, self._cachedInteractionController);
+            if (!viewForGesture) return;
+            
+            if (viewController != [viewController.navigationController.viewControllers objectAtIndex:0]) { //if it's not rootviewcontroller
+                if (!viewForGesture.dismissPanGestureRecognizer) {
+                    DLog(@"Adding gesture on view %@ : %@", viewForGesture, self._cachedInteractionController);
 
-            if ([self._cachedInteractionController respondsToSelector:@selector(handleNavigationTransition:)]) {
-                viewForGesture.dismissPanGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self._cachedInteractionController action:@selector(handleNavigationTransition:)];
-                viewForGesture.dismissPanGestureRecognizer.delegate = self;
-                [viewForGesture addGestureRecognizer:viewForGesture.dismissPanGestureRecognizer];
+                    if ([self._cachedInteractionController respondsToSelector:@selector(handleNavigationTransition:)]) {
+                        viewForGesture.dismissPanGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self._cachedInteractionController action:@selector(handleNavigationTransition:)];
+                        viewForGesture.dismissPanGestureRecognizer.delegate = self;
+                        [viewForGesture addGestureRecognizer:viewForGesture.dismissPanGestureRecognizer];
+                    }
+                }
             }
-        }
-    }
-    
-#pragma clang diagnostic pop
+            
+        #pragma clang diagnostic pop
+    });
 }
 
 //Limit conflicts with some UIScrollView and swipes from right to left
@@ -83,13 +86,14 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     return NO;
 }
 
-
--(void)_cancelInteractiveTransition:(double)arg1 transitionContext:(id)arg2 {
-    DLog(@"Interactive trans cancelled");
-    %orig;
-}
-
 %end //hook UINavigationController
+
+
+%hook UIView
+
+%property (nonatomic, retain) UIPanGestureRecognizer *dismissPanGestureRecognizer;
+
+%end //hook UIView
 
 
 %hook _UINavigationInteractiveTransitionBase
@@ -101,14 +105,6 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 }
 
 %end //hook _UINavigationInteractiveTransitionBase
-
-
-%hook UIView
-
-%property (nonatomic, retain) UIPanGestureRecognizer *dismissPanGestureRecognizer;
-
-%end //hook UIView
-
 
 %end //group PanCake
 
