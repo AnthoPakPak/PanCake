@@ -21,17 +21,18 @@
     return self;
 }
 
+-(void) viewDidLoad {
+    [super viewDidLoad];
+
+    // self.table.contentInset = UIEdgeInsetsMake(-34, 0, 0, 0);
+    self.table.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+}
+
 - (id)specifiers {
     if(_specifiers == nil) {
         _specifiers = [[self loadSpecifiersFromPlistName:@"Prefs" target:self] retain];
     }
     return _specifiers;
-}
-
--(void) viewDidLoad {
-    [super viewDidLoad];
-
-    // self.table.contentInset = UIEdgeInsetsMake(-34, 0, 0, 0);
 }
 
 - (double)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section {
@@ -43,9 +44,6 @@
 }
 
 - (void)respring:(id)sender {
-    NSTask *t = [[[NSTask alloc] init] autorelease];
-    [t setLaunchPath:@"/usr/bin/killall"];
-    [t setArguments:[NSArray arrayWithObjects:@"backboardd", nil]];
-    [t launch];
+    [HBRespringController respring];
 }
 @end
