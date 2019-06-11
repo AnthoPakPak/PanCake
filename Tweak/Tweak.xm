@@ -143,7 +143,8 @@ void setDefaultBlacklistedApps() {
         @"ph.telegra.Telegraph",
 
         //gesture conflicts
-        @"com.spotify.client" //adding song to the queue
+        @"com.spotify.client", //adding song to the queue
+        @"com.hegenberg.BetterTouchToolRemote" //showing left controls
     ];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
