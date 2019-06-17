@@ -88,10 +88,13 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     return NO;
 }
 
+//Limit conflicts with UISlider (Know issue: sometimes gestures will stop working after playing a bit with a slider, still need to be fixed)
 %new
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    if ([touch.view isKindOfClass:[UISlider class]]) {
-        return NO;
+    if (gestureRecognizer == gestureRecognizer.view.dismissPanGestureRecognizer) {
+        if ([touch.view isKindOfClass:[UISlider class]]) {
+            return NO;
+        }
     }
     return YES;
 }
