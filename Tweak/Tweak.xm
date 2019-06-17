@@ -88,6 +88,14 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     return NO;
 }
 
+%new
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isKindOfClass:[UISlider class]]) {
+        return NO;
+    }
+    return YES;
+}
+
 %end //hook UINavigationController
 
 
