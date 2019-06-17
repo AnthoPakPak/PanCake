@@ -42,6 +42,8 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     dispatch_async(dispatch_get_main_queue(), ^{
         UIViewController *viewController = [self topViewController];
 
+        if (!viewController) return;
+
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Wundeclared-selector"
 
@@ -49,7 +51,7 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 
             if (!viewForGesture) return;
             
-            if (viewController != [viewController.navigationController.viewControllers objectAtIndex:0]) { //if it's not rootviewcontroller
+            if (viewController.navigationController.viewControllers.count > 0 && viewController != [viewController.navigationController.viewControllers objectAtIndex:0]) { //if it's not rootviewcontroller
                 if (!viewForGesture.dismissPanGestureRecognizer) {
                     DLog(@"Adding gesture on view %@ : %@", viewForGesture, self._cachedInteractionController);
 
@@ -144,7 +146,8 @@ void setDefaultBlacklistedApps() {
 
         //gesture conflicts
         @"com.spotify.client", //adding song to the queue
-        @"com.hegenberg.BetterTouchToolRemote" //showing left controls
+        @"com.hegenberg.BetterTouchToolRemote", //showing left controls
+        @"fr.leboncoin.Leboncoin" //app launch broken
     ];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
