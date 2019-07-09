@@ -19,7 +19,8 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     DLog(@"panGestureIsSwipingLeftToRight %@", NSStringFromCGPoint(velocity));
 
     if (fabs(velocity.x) > fabs(velocity.y)) { //horizontal
-        if (velocity.x > 0) { //from left to right
+        BOOL deviceIsRTL = [UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft; //right to left, for arabic devices
+        if ((!deviceIsRTL && velocity.x > 0) || (deviceIsRTL && velocity.x < 0)) { //from left to right on LTR, or from right to left on RTL
             return YES;
         }
     }

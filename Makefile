@@ -1,5 +1,5 @@
 #export THEOS=/var/theos
-export THEOS_DEVICE_IP=192.168.0.20
+export THEOS_DEVICE_IP=192.168.0.29
 #export THEOS_DEVICE_IP=172.20.10.1
 # export THEOS_DEVICE_IP=192.168.1.133
 
