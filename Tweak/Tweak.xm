@@ -123,6 +123,7 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 %end //group PanCake
 
 
+//HapticFeedback is splitted so that it can be performed even in blacklisted apps
 %group HapticFeedback
 
 %hook UINavigationController

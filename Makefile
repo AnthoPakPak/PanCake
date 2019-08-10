@@ -28,7 +28,8 @@ include $(THEOS_MAKE_PATH)/aggregate.mk
 
 
 after-install::
-# ifeq ($(RESPRING),1)
+ifeq ($(RESPRING),1)
 # 	install.exec "killall -9 SpringBoard"
-# endif
+	install.exec "killall Preferences"
+endif
 	/Applications/OSDisplay.app/Contents/MacOS/OSDisplay -m 'Install success' -i 'tick' -d '1'
