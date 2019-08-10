@@ -1,4 +1,8 @@
-ARCHS = arm64 arm64e
+ifeq ($(FINALPACKAGE),1)
+	ARCHS = arm64 arm64e
+else
+	ARCHS = arm64
+endif
 TARGET = iphone:clang:11.2:11.0 #12.2 my Xcode SDK, 11.0 my iOS target
 
 include $(THEOS)/makefiles/common.mk
@@ -12,6 +16,9 @@ $(BUNDLE_NAME)_PRIVATE_FRAMEWORKS = Preferences
 $(BUNDLE_NAME)_EXTRA_FRAMEWORKS = Cephei CepheiPrefs
 
 include $(THEOS_MAKE_PATH)/bundle.mk
+
+before-all::
+	chmod 644 ./Resources/*.png
 
 internal-stage::
 	$(ECHO_NOTHING)mkdir -p $(THEOS_STAGING_DIR)/Library/PreferenceLoader/Preferences$(ECHO_END)
