@@ -140,9 +140,10 @@ static NSInteger headerPaddingLeftRight = 10;
 }
 
 - (double)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        // return tableView.frame.size.width * (300.0f/800.0f); //image ratio
-        return 0; //image ratio
+    if (section == 0 || section == 4) {
+        return 0;
+    } else if (section == 3) { //my other tweaks
+        return 60;
     } else {
         return 45;
     }

@@ -3,7 +3,7 @@ Name: PanCake
 Depends: mobilesubstrate, ws.hbang.common (>= 1.11), applist, firmware (>= 11.0)
 Version: 1.0
 Architecture: iphoneos-arm
-Description: Interactive dismiss gesture on whole screen in all apps
+Description: Interactive dismiss gesture on the whole screen in all apps
 Maintainer: AnthoPak
 Author: AnthoPak
 Section: Tweaks
