@@ -71,7 +71,11 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 //Limit conflicts with some UIScrollView and swipes from right to left
 %new
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)panGestureRecognizer {
-    return panGestureIsSwipingLeftToRight(panGestureRecognizer);
+    if (panGestureRecognizer == panGestureRecognizer.view.dismissPanGestureRecognizer) {
+        return panGestureIsSwipingLeftToRight(panGestureRecognizer);
+    }
+
+    return YES;
 }
 
 %new
