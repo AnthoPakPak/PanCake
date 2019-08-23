@@ -6,6 +6,7 @@ HBPreferences *preferences;
 
 BOOL enabled;
 BOOL hapticFeedbackEnabled;
+NSInteger hapticFeedbackStrength;
 
 NSString *appName;
 
@@ -136,7 +137,19 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     %orig;
 
     if (hapticFeedbackEnabled) {
-        [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight] impactOccurred];
+        switch (hapticFeedbackStrength) {
+            case 0:
+                [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight] impactOccurred];
+                break;
+            case 1:
+                [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium] impactOccurred];
+                break;
+            case 2:
+                [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleHeavy] impactOccurred];
+                break;
+            default: 
+                break;
+        }
     }
 }
 
@@ -224,6 +237,7 @@ static BOOL tweakShouldLoad() {
     preferences = [[HBPreferences alloc] initWithIdentifier:@"com.anthopak.pancake"];
     [preferences registerBool:&enabled default:YES forKey:@"enabled"];
     [preferences registerBool:&hapticFeedbackEnabled default:YES forKey:@"hapticFeedbackEnabled"];
+    [preferences registerInteger:&hapticFeedbackStrength default:0 forKey:@"hapticFeedbackStrength"];
     #else
     enabled = YES;
     hapticFeedbackEnabled = YES;

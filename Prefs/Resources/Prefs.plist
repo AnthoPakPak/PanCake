@@ -72,7 +72,7 @@ Some apps are already added on the list by default for your convenience.</string
 			<key>isStaticText</key>
 			<true/>
 			<key>footerText</key>
-			<string>Enable haptic feedback on dismiss end. Change requires a respring.</string>
+			<string>Enable haptic feedback on dismiss end. Enable/Disable requires a respring. Changing strength requires relaunching apps.</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -85,6 +85,30 @@ Some apps are already added on the list by default for your convenience.</string
 			<string>Enable haptic feedback</string>
 			<key>key</key>
 			<string>hapticFeedbackEnabled</string>
+			<key>PostNotification</key>
+			<string>com.anthopak.pancake/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSegmentCell</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>defaults</key>
+			<string>com.anthopak.pancake</string>
+			<key>key</key>
+			<string>hapticFeedbackStrength</string>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Light</string>
+				<string>Medium</string>
+				<string>Strong</string>
+			</array>
 			<key>PostNotification</key>
 			<string>com.anthopak.pancake/ReloadPrefs</string>
 		</dict>
