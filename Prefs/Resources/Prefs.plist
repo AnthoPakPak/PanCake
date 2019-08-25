@@ -152,6 +152,18 @@ Some apps are already added on the list by default for your convenience.</string
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
+			<string>SwitchShades</string>
+			<key>subtitle</key>
+			<string>Bring color to your app switcher based on app icon</string>
+			<key>icon</key>
+    		<string>otherTweaks/switchShades@2x.png</string>
+			<key>url</key>
+			<string>http://bit.ly/SwitchShadesCross</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
 			<string>VideoSwipes</string>
 			<key>subtitle</key>
 			<string>Swipe gestures for video players (native, YouTube, Facebook)</string>
