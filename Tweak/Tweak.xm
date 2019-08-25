@@ -40,33 +40,28 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 -(void)_layoutTopViewController {
     %orig;
 
-    //main thread to let time for some apps (Apple Support) to load nibs
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIViewController *viewController = [self topViewController];
+    UIViewController *viewController = [self topViewController];
 
-        if (!viewController) return;
+    if (!viewController || !viewController.viewLoaded) return; //check viewLoaded is required for some apps loading nibs on launch (Apple Support) 
 
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Wundeclared-selector"
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wundeclared-selector"
 
-            UIView *viewForGesture = viewController.view;
+        UIView *viewForGesture = viewController.view;
 
-            if (!viewForGesture) return;
-            
-            if (viewController.navigationController.viewControllers.count > 0 && viewController != [viewController.navigationController.viewControllers objectAtIndex:0]) { //if it's not rootviewcontroller
-                if (!viewForGesture.dismissPanGestureRecognizer) {
-                    DLog(@"Adding gesture on view %@ : %@", viewForGesture, self._cachedInteractionController);
+        if (viewController.navigationController.viewControllers.count > 0 && viewController != [viewController.navigationController.viewControllers objectAtIndex:0]) { //if it's not rootviewcontroller
+            if (!viewForGesture.dismissPanGestureRecognizer) {
+                DLog(@"Adding gesture on view %@ : %@", viewForGesture, self._cachedInteractionController);
 
-                    if ([self._cachedInteractionController respondsToSelector:@selector(handleNavigationTransition:)]) {
-                        viewForGesture.dismissPanGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self._cachedInteractionController action:@selector(handleNavigationTransition:)];
-                        viewForGesture.dismissPanGestureRecognizer.delegate = self;
-                        [viewForGesture addGestureRecognizer:viewForGesture.dismissPanGestureRecognizer];
-                    }
+                if ([self._cachedInteractionController respondsToSelector:@selector(handleNavigationTransition:)]) {
+                    viewForGesture.dismissPanGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self._cachedInteractionController action:@selector(handleNavigationTransition:)];
+                    viewForGesture.dismissPanGestureRecognizer.delegate = self;
+                    [viewForGesture addGestureRecognizer:viewForGesture.dismissPanGestureRecognizer];
                 }
             }
-            
-        #pragma clang diagnostic pop
-    });
+        }
+        
+    #pragma clang diagnostic pop
 }
 
 //Limit conflicts with some UIScrollView and swipes from right to left
