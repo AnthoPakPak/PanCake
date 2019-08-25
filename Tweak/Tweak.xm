@@ -173,8 +173,6 @@ void setDefaultBlacklistedApps() {
         //gesture conflicts
         @"com.spotify.client", //adding song to the queue
         @"com.hegenberg.BetterTouchToolRemote", //showing left controls
-        @"fr.leboncoin.Leboncoin", //app launch broken
-        @"com.google.AnalyticsApp", //app launch broken
         @"com.intsig.CamScanner" //resizing image conflicts
     ];
 
