@@ -1,9 +1,9 @@
 Package: com.anthopak.pancake
 Name: PanCake
 Depends: mobilesubstrate, ws.hbang.common (>= 1.11), applist, firmware (>= 11.0)
-Version: 1.1
+Version: 2.0
 Architecture: iphoneos-arm
 Description: Interactive dismiss gesture on the whole screen in all apps
-Maintainer: AnthoPak
-Author: AnthoPak
+Maintainer: AnthoPak, whoami
+Author: AnthoPak, whoami
 Section: Tweaks

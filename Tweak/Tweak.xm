@@ -6,6 +6,7 @@ HBPreferences *preferences;
 
 BOOL enabled;
 BOOL hapticFeedbackEnabled;
+BOOL disableGesturesKeyboard;
 NSInteger hapticFeedbackStrength;
 
 NSString *appName;
@@ -14,10 +15,30 @@ NSString *appName;
 
 BOOL shouldRecognizeSimultaneousGestures;
 
+static BOOL GestureEnable = YES;
+
+// static UIViewController* topMostController() {
+    // UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    // while (topController.presentedViewController) {
+        // topController = topController.presentedViewController;
+    // }
+
+    // return topController;
+// }
+
+// static void showAlert(NSString *myMessage) {
+	// UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告" message:myMessage preferredStyle:UIAlertControllerStyleAlert];
+	// [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+	// [topMostController() presentViewController:alertController animated:YES completion:nil];
+// }
 
 static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     CGPoint velocity = [panGest velocityInView:panGest.view];
     DLog(@"panGestureIsSwipingLeftToRight %@", NSStringFromCGPoint(velocity));
+	if(!GestureEnable){
+		//showAlert(@"开始手势");
+		return NO;
+	}
 
     if (fabs(velocity.x) > fabs(velocity.y)) { //horizontal
         BOOL deviceIsRTL = [UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft; //right to left, for arabic devices
@@ -39,6 +60,21 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 
 -(void)_layoutTopViewController {
     %orig;
+	
+	
+	// Disable Gestures When Keyboard is Visible
+	//键盘弹出调用keyboardDidShow函数
+	if(disableGesturesKeyboard){
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												selector:@selector(keyboardDidShow:)
+													name:UIKeyboardDidShowNotification
+												object:nil];
+		//键盘隐藏
+		[[NSNotificationCenter defaultCenter] addObserver:self
+										 selector:@selector(keyboardDidHide:)
+											 name:UIKeyboardDidHideNotification
+										   object:nil];
+	}
 
     UIViewController *viewController = [self topViewController];
 
@@ -63,6 +99,19 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
         
     #pragma clang diagnostic pop
 }
+
+%new
+-(void)keyboardDidShow:(NSNotification *)sender
+{
+    GestureEnable = NO;
+}
+
+%new
+-(void)keyboardDidHide:(NSNotification *)sender
+{
+    GestureEnable = YES;
+}
+
 
 //Limit conflicts with some UIScrollView and swipes from right to left
 %new
@@ -232,10 +281,12 @@ static BOOL tweakShouldLoad() {
     #ifndef SIMULATOR
     preferences = [[HBPreferences alloc] initWithIdentifier:@"com.anthopak.pancake"];
     [preferences registerBool:&enabled default:YES forKey:@"enabled"];
+    [preferences registerBool:&disableGesturesKeyboard default:NO forKey:@"disableGesturesKeyboard"];
     [preferences registerBool:&hapticFeedbackEnabled default:YES forKey:@"hapticFeedbackEnabled"];
     [preferences registerInteger:&hapticFeedbackStrength default:0 forKey:@"hapticFeedbackStrength"];
     #else
     enabled = YES;
+	disableGesturesKeyboard = NO
     hapticFeedbackEnabled = YES;
     #endif
     setDefaultBlacklistedApps();

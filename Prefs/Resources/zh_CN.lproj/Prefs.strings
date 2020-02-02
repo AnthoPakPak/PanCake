@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Blacklisted apps</key>
+	<string>黑名单应用</string>
+	<key>Check out my other tweaks!</key>
+	<string>看看我的其他插件！</string>
+	<key>Disable Gestures When Keyboard is Visible. Not Require Respring.</key>
+	<string>当键盘显示时则禁用滑动手势，以防止误触。此项即时生效，无须注销。</string>
+	<key>Disable Gestures With Keyboard</key>
+	<string>键盘显示时禁用手势</string>
+	<key>Disable PanCake in certain apps. Use it if you encounter gesture conflicts. Relaunch app for change to take effect.
+Some apps are already added on the list by default for your convenience.</key>
+	<string>在某些应用程序中禁用PanCake。如果遇到手势冲突，请开启此选项。重启应用以使更改生效。
+为了方便起见，默认情况下某些应用已添加到列表中。</string>
+	<key>Disable in selected apps</key>
+	<string>在指定应用中禁用</string>
+	<key>ENABLED</key>
+	<string>启用</string>
+	<key>Enable haptic feedback</key>
+	<string>启用触觉反馈</string>
+	<key>Enable haptic feedback on dismiss end. Enable/Disable requires a respring. Changing strength requires relaunching apps.</key>
+	<string>在解除结束时启用触觉反馈。启用/禁用需要响应。改变实力需要重新启动应用程序。</string>
+	<key>Haptic Feedback</key>
+	<string>触觉反馈</string>
+	<key>Kill apps or respring for change to take effect in already running apps.</key>
+	<string>杀掉应用或注销都以使更改生效。
+	
+简体中文汉化由whoami制作
+我的源 https://lwlsw.github.io/repo/
+</string>
+	<key>Light</key>
+	<string>轻</string>
+	<key>Medium</key>
+	<string>中</string>
+	<key>My other tweaks</key>
+	<string>我的其他插件</string>
+	<key>Strong</key>
+	<string>强</string>
+</dict>
+</plist>

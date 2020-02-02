@@ -35,7 +35,7 @@ include $(THEOS_MAKE_PATH)/tweak.mk
 
 
 after-all::
-	/Applications/OSDisplay.app/Contents/MacOS/OSDisplay -m 'Build success' -i 'tick' -d '1'
+#	/Applications/OSDisplay.app/Contents/MacOS/OSDisplay -m 'Build success' -i 'tick' -d '1'
 ifeq ($(SIMULATOR),1)
 	yes | cp -rf ~/Documents/Programmation/iOSTweaks/tweaks/BackPanGesture/Tweak/$(TWEAK_NAME).plist /opt/simject/
 	yes | cp -rf ~/Documents/Programmation/iOSTweaks/tweaks/BackPanGesture/.theos/obj/iphone_simulator/debug/$(TWEAK_NAME).dylib /opt/simject/

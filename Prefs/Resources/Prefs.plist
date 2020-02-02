@@ -64,6 +64,31 @@ Some apps are already added on the list by default for your convenience.</string
 		</dict>
 
 
+
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>isStaticText</key>
+			<true/>
+			<key>footerText</key>
+			<string>Disable Gestures When Keyboard is Visible. Not Require Respring.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.anthopak.pancake</string>
+			<key>label</key>
+			<string>Disable Gestures With Keyboard</string>
+			<key>key</key>
+			<string>disableGesturesKeyboard</string>
+			<key>PostNotification</key>
+			<string>com.anthopak.pancake/ReloadPrefs</string>
+		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
