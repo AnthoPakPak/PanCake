@@ -6,4 +6,8 @@
   "SUPPORT_ME" = "Support me for upcoming features and new tweaks!";
   "GITHUB" = "GitHub";
   "CHECK_THE_CODE" = "Check out the code!";
+  "Adjust_the_sensitivity" = "Adjust the sensitivity of gesture recognition, Prevent accidental touch. The smaller the value, the higher the sensitivity.
+			
+			
+			";
 }

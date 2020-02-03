@@ -35,16 +35,16 @@ static BOOL GestureEnable = YES;
 
 static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
     CGPoint velocity = [panGest velocityInView:panGest.view];
-    //CGPoint translation = [panGest translationInView:panGest.view];
+    CGPoint translation = [panGest translationInView:panGest.view];
     DLog(@"panGestureIsSwipingLeftToRight %@", NSStringFromCGPoint(velocity));
 	if(!GestureEnable){
 		//showAlert(@"开始手势");
 		return NO;
 	}
-	// showAlert(NSStringFromCGPoint(velocity));
-    if (fabs(velocity.x) > fabs(velocity.y)) { //horizontal
+	//showAlert(NSStringFromCGPoint(translation));
+    if (fabs(translation.x) > fabs(translation.y)) { //horizontal
         BOOL deviceIsRTL = [UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft; //right to left, for arabic devices
-        if ((!deviceIsRTL && velocity.x > SensitivityValue*5) || (deviceIsRTL && velocity.x < 0)) { //from left to right on LTR, or from right to left on RTL
+        if ((!deviceIsRTL && translation.x > SensitivityValue/10) || (deviceIsRTL && translation.x < 0)) { //from left to right on LTR, or from right to left on RTL
             return YES;
         }
     }

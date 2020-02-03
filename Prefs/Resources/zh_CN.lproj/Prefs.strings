@@ -38,5 +38,22 @@ Some apps are already added on the list by default for your convenience.</key>
 	<string>我的其他插件</string>
 	<key>Strong</key>
 	<string>强</string>
+	<key>New features by whoami</key>
+	<string>新功能</string>
+	<key>Keyboard disable and sensitivity adjustment features developed by whoami.</key>
+	<string>键盘显示禁用功能和手势灵敏度调节功能由whoami开发。</string>
+	<key>Gesture Sensitivity</key>
+	<string>手势灵敏度</string>
+	<key>Adjust_the_sensitivity</key>
+	<string>如果经常误触，可以适当调整手势的灵敏度，值越小，灵敏度越高。
+			
+			
+			</string>
+	<key>SUPPORT_ME</key>
+	<string>为我捐赠</string>
+	<key>GITHUB</key>
+	<string>GitHub</string>
+	<key>CHECK_THE_CODE</key>
+	<string>阅读开源代码</string>
 </dict>
 </plist>

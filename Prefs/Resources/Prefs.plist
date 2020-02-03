@@ -88,6 +88,43 @@ Some apps are already added on the list by default for your convenience.</string
 			<key>PostNotification</key>
 			<string>com.anthopak.pancake/ReloadPrefs</string>
 		</dict>
+		
+		
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Adjust_the_sensitivity</string>
+			<key>isStaticText</key>
+			<true/>
+			<key>label</key>
+			<string>Gesture Sensitivity</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.anthopak.pancake/ReloadPrefs</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<string>0</string>
+			<key>defaults</key>
+			<string>com.anthopak.pancake</string>
+			<key>isSegmented</key>
+			<true/>
+			<key>key</key>
+			<string>SensitivityValue</string>
+			<key>label</key>
+			<string>Sensitivity Value</string>
+			<key>max</key>
+			<string>100</string>
+			<key>min</key>
+			<string>0</string>
+			<key>segmentCount</key>
+			<integer>10</integer>
+			<key>showValue</key>
+			<true/>
+		</dict>
+
 
 		<dict>
 			<key>cell</key>
@@ -244,6 +281,27 @@ Some apps are already added on the list by default for your convenience.</string
 			<string>CHECK_THE_CODE</string>
 			<key>url</key>
 			<string>https://github.com/AnthoPakPak/PanCake</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>isStaticText</key>
+			<true/>
+			<key>label</key>
+			<string>New features by whoami</string>
+			<key>footerText</key>
+			<string>Keyboard disable and sensitivity adjustment features developed by whoami.</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>GITHUB</string>
+			<key>subtitle</key>
+			<string>CHECK_THE_CODE</string>
+			<key>url</key>
+			<string>https://github.com/lwlsw/PanCake</string>
 		</dict>
 
 	</array>
