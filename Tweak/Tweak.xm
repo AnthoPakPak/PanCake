@@ -76,6 +76,8 @@ static BOOL panGestureIsSwipingLeftToRight(UIPanGestureRecognizer *panGest) {
 										 selector:@selector(keyboardDidHide:)
 											 name:UIKeyboardDidHideNotification
 										   object:nil];
+		//调用一次后就关闭。防止重复调用，影响性能。
+		disableGesturesKeyboard = NO;
 	}
 
     UIViewController *viewController = [self topViewController];
